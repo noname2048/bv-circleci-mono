@@ -1,0 +1,33 @@
+FROM python:3.9-bullseye AS get_poetry
+
+ENV GET_POETRY_DIR /get_poetry
+
+WORKDIR ${GET_POETRY_DIR}
+RUN curl -sSL https://install.python-poetry.org | python3 -
+ENV PATH="/root/.local/bin:${PATH}"
+
+WORKDIR /
+RUN rm -rf ${GET_POETRY_DIR}
+
+CMD ["bash"]
+
+FROM get_poetry AS virtual_env
+
+ENV VENV_DIR /root/venv
+ENV VENV_NAME bv
+ENV VENV ${VENV_DIR}/${VENV_NAME}
+
+RUN python3 -m venv ${VENV}
+RUN chmod u+x ${VENV}/bin/activate
+
+RUN poetry config virtualenvs.create false
+RUN poetry config virtualenvs.path ${VENV_DIR}
+
+FROM virtual_env AS poetry_install
+
+WORKDIR /root/backend
+COPY pyproject.toml poetry.lock ./ 
+
+WORKDIR /root/backend-app
+COPY pyproject.toml poetry.lock ./ 
+RUN poetry install
