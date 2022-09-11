@@ -1,6 +1,8 @@
 FROM python:3.9-bullseye AS install_pipenv
 
-RUN pip install --no-cache-dir --upgrade pip && pip install pipenv --system --deploy --ignore-pipfile 
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir pipenv
+
 CMD ["bash"]
 
 FROM install_pipenv AS virtual_env
@@ -12,13 +14,8 @@ ENV VENV ${VENV_DIR}/${VENV_NAME}
 RUN python3 -m venv ${VENV}
 RUN chmod u+x ${VENV}/bin/activate
 
-# RUN pipenv 
-
 FROM virtual_env AS poetry_install
-
-WORKDIR /root/backend
-COPY pyproject.toml poetry.lock ./ 
 
 WORKDIR /root/backend-app
 COPY pyproject.toml poetry.lock ./ 
-RUN poetry install
+RUN . ${VENV}/bin/activate && pipenv sync

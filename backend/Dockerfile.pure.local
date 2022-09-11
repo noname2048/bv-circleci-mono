@@ -13,15 +13,9 @@ CMD ["bash"]
 
 FROM get_poetry AS virtual_env
 
-ENV VENV_DIR /root/venv
-ENV VENV_NAME bv
-ENV VENV ${VENV_DIR}/${VENV_NAME}
-
-RUN python3 -m venv ${VENV}
-RUN chmod u+x ${VENV}/bin/activate
-
-RUN poetry config virtualenvs.create false
-RUN poetry config virtualenvs.path ${VENV_DIR}
+ENV VIRTUAL_ENV=/opt/bv
+RUN python3 -m venv ${VIRTUAL_ENV}
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
 FROM virtual_env AS poetry_install
 
