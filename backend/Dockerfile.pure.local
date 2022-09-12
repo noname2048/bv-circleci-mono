@@ -16,9 +16,10 @@ FROM get_poetry AS virtual_env
 ENV VIRTUAL_ENV=/opt/bv
 RUN python3 -m venv ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
+RUN poetry config virtualenvs.create false
 
 FROM virtual_env AS poetry_install
 
 WORKDIR /root/backend-app
 COPY pyproject.toml poetry.lock ./ 
-RUN poetry config virtualenvs.create false && poetry install
+RUN poetry install
