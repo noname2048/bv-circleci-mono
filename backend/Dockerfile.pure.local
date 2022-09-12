@@ -21,4 +21,4 @@ FROM virtual_env AS poetry_install
 
 WORKDIR /root/backend-app
 COPY pyproject.toml poetry.lock ./ 
-RUN . ${VENV}/bin/activate && poetry install
+RUN poetry config virtualenvs.create false && poetry install
