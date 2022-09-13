@@ -1,0 +1,36 @@
+version: "3.9"
+
+
+volumes:
+  postgres-persist-volume:
+  backend-app-cache-volume:
+
+
+services:
+  backend-app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.pure.local
+    image: bv-backend-app
+    ports:
+      - ${BV_BACKEND_APP_PORT:-8000}:8000
+    volumes:
+      - backend-app-cache-volume:/root/venv
+      - ./backend:/root/backend-app
+    working_dir: /root/backend-app
+    command: >
+      sh -c "poetry install && python main.py" 
+
+
+  frontend-app:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.local
+    image: bv-frontend-app
+    ports:
+      - ${BV_FRONTEND_APP_PORT:-3000}:3000
+    volumes:
+      - ./frontend:/root/frontend-app
+    working_dir: /root/frontend-app
+    command: >
+      sh -c "yarn install && yarn dev"
