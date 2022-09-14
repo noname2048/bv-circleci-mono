@@ -5,7 +5,10 @@ description = ""
 authors = ["sungwook.choi <sungwook.csw@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
+alembic = "^1.8.1"
+uvicorn = "^0.18.3"
+fastapi = "^0.82.0"
 
 [tool.poetry.dev-dependencies]
 
