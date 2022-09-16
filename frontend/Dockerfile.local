@@ -1,0 +1,11 @@
+FROM node:18-bullseye AS berry
+
+RUN yarn set version berry
+
+CMD ["bash"]
+
+FROM berry
+
+WORKDIR /root/frontend-app
+COPY .pnp.cjs .yarn/ package.json yarn.lock ./
+RUN yarn install
