@@ -1,0 +1,22 @@
+version: 2.1
+
+orbs:
+  docker: circleci/docker@2.1.3
+
+paramters:
+  check-backend:
+    type: boolean
+    default: false
+  check-frontend:
+    type: boolean
+    default: false
+
+jobs:
+  lint-backend:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: lint backend
+          command: black .
