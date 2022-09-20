@@ -20,3 +20,9 @@ jobs:
       - run:
           name: lint backend
           command: black .
+
+  lint-frontend:
+    docker:
+      - image: cimg/node:18
+    steps:
+      - checkout
