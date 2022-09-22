@@ -8,11 +8,11 @@ orbs:
   docker: circleci/docker@2.1.3
 
 workflows:
-  generate-config:
+  setup:
     jobs:
       - path-filtering/filter:
-        base-revision: master
-        config-path: .circleci/continue-config.yml
-        mapping: |
-          backend/* check-backend true
-          frontend/* check-frontend true
+          base-revision: master
+          config-path: .circleci/continue-config.yml
+          mapping: |
+            backend/* check-backend true
+            frontend/* check-frontend true
