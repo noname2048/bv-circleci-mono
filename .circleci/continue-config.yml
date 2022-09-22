@@ -12,6 +12,16 @@ paramters:
     default: false
 
 jobs:
+  lint-docker:
+    docker:
+      - image: cimg/node:18
+    steps:
+      - checkout
+      - run:
+          name: run formatter
+          command: |
+            npx prettier@2 --check "**/*.{md,yaml,yml,json}"
+
   lint-backend:
     docker:
       - image: cimg/python:3.9
@@ -26,3 +36,22 @@ jobs:
       - image: cimg/node:18
     steps:
       - checkout
+
+workflows:
+  lint-docker:
+    jobs:
+      - lint-docker:
+
+  lint-backend:
+    when:
+      or:
+        - << pipeline.parameters.check-backend >>
+    jobs:
+      - lint-backend:
+          requires:
+            - lint-docker
+
+  lint-frontend:
+    when:
+      or:
+        - << pipeline.parameters.check-frontend >>
