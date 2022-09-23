@@ -44,7 +44,8 @@ jobs:
 
 workflows:
   common-workflow:
-    jobs: lint-docker
+    jobs:
+      - lint-docker
 
   backend-workflow:
     when:
