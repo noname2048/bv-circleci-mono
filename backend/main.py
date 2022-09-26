@@ -1,11 +1,15 @@
+# std
 from datetime import datetime, timedelta, timezone
 
+# 3rd
 from fastapi import FastAPI, Depends
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
-from .schemas import User
-from .services import get_users
-from .db.models import get_db
+
+# app
+from app.schemas import User
+from app.services import get_users
+from app.db.models import get_db
 
 
 app = FastAPI()
@@ -36,4 +40,4 @@ if __name__ == "__main__":
     Path(__file__).resolve().parents[1]
     import uvicorn
 
-    uvicorn.run("main:app", reload=True)
+    uvicorn.run("main:backend", reload=True)
