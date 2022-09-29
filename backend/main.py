@@ -9,12 +9,22 @@ from sqlalchemy.orm import Session
 # app
 from app.schemas import User
 from app.services import get_users
-from app.db.models import get_db
+from app.db.database import get_db, database
 
 
 app = FastAPI()
 
 kst = timezone(timedelta(hours=9))
+
+
+@app.on_event("startup")
+async def startup():
+    await database.connect()
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    await database.disconnect()
 
 
 class IndexResponse(BaseModel):
@@ -40,4 +50,4 @@ if __name__ == "__main__":
     Path(__file__).resolve().parents[1]
     import uvicorn
 
-    uvicorn.run("main:backend", reload=True)
+    uvicorn.run("main:app", reload=True)
