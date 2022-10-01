@@ -9,22 +9,12 @@ from sqlalchemy.orm import Session
 # app
 from app.schemas import User
 from app.services import get_users
-from app.db.database import get_db, database
+from app.db.database import get_db
 
 
 app = FastAPI()
 
 kst = timezone(timedelta(hours=9))
-
-
-@app.on_event("startup")
-async def startup():
-    await database.connect()
-
-
-@app.on_event("shutdown")
-async def shutdown():
-    await database.disconnect()
 
 
 class IndexResponse(BaseModel):
