@@ -4,7 +4,8 @@ from datetime import datetime, timedelta, timezone
 # 3rd
 from fastapi import FastAPI, Depends
 from pydantic import BaseModel, Field
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 
 # app
 from app.schemas import User
@@ -28,8 +29,8 @@ async def index():
 
 
 @app.get("/users", response_model=list[User])
-async def list_user(db: Session = Depends(get_db)):
-    users = get_users(db)
+async def list_user(db: AsyncSession = Depends(get_db)):
+    users = await get_users(db)
     return users
 
 
