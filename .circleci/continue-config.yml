@@ -54,9 +54,13 @@ workflows:
     jobs:
       - lint-backend:
           requires:
-            - lint-docker
+            - common-workflow
 
   frontend-workflow:
     when:
       or:
         - << pipeline.parameters.check-frontend >>
+    jobs:
+      - lint-frontend:
+          requires:
+            - common-workflow
