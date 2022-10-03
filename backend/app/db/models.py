@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy import Table, MetaData
 
 from app.db.database import Base
@@ -11,4 +11,10 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     is_active = Column(Boolean, default=True, nullable=False)
 
-    __mapper_agrs__ = {"eager_defaults": True}
+
+class Candidate(Base):
+    __tablename__ = "candidates_candidate"
+
+    id = Column(Integer, primary_key=True)
+    email = Column(String)
+    pipeline_entered_at = Column(DateTime)

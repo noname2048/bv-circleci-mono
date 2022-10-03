@@ -8,8 +8,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 # app
-from app.schemas import User
-from app.services import get_users
+from app.schemas import User, Candidate
+from app.services import get_users, get_recently_updated_candidates
 from app.db.database import get_db
 
 
@@ -32,6 +32,12 @@ async def index():
 async def list_user(db: AsyncSession = Depends(get_db)):
     users = await get_users(db)
     return users
+
+
+@app.get("/candidates")  # , response_model=list[Candidate])
+async def list_candidate(db: AsyncSession = Depends(get_db)):
+    candidates = await get_recently_updated_candidates(db)
+    return candidates
 
 
 if __name__ == "__main__":
