@@ -17,4 +17,4 @@ class Candidate(Base):
 
     id = Column(Integer, primary_key=True)
     email = Column(String)
-    pipeline_entered_at = Column(DateTime)
+    pipeline_entered_at = Column(DateTime(timezone=True))
