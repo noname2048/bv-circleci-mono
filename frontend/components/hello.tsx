@@ -1,5 +1,7 @@
-import { JSX } from React;
+import React from "react";
 
-export default function Hello(): JSX.element {
+const Hello: React.FC = () => {
   return <div>hello</div>;
-}
+};
+
+export default Hello;
