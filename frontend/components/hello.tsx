@@ -1,7 +1,5 @@
-import React from "react";
+import type {AppProps} from 'next/app';
 
-const Hello: React.FC = () => {
-  return <div>hello</div>;
-};
-
-export default Hello;
+export default function MyApp({ Component, pageProps }: AppProps){
+  return <div>hello</div>:
+}
