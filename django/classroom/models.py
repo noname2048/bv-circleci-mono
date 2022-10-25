@@ -1,8 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+
+class School(models.Model):
+    name = models.CharField(max_length=20)
 
 
 class Grade(models.Model):
-    grade = models.IntegerField()
     age = models.IntegerField()
 
 
@@ -12,4 +16,28 @@ class Classroom(models.Model):
 
 
 class Student(models.Model):
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
+
+
+class User(AbstractUser):
+    uuid = models.UUIDField(primary_key=True)
+    id = models.BigAutoField()
+    email = models.CharField(max_length=64)
+
+    USERNAME_FIELD = "email"
+
+
+class SchoolStaff(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class GradeStaff(models.Model):
+    school_staff = models.ForeignKey(SchoolStaff, on_delete=models.CASCADE)
+    grade = models.ForeignKey(Grade, on_delete=models.CASCADE)
+
+
+class ClassroomStaff(models.Model):
+    school_staff = models.ForeignKey(SchoolStaff, on_delete=models.CASCADE)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
