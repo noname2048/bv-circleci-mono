@@ -21,11 +21,8 @@ class Student(models.Model):
 
 
 class User(AbstractUser):
-    uuid = models.UUIDField(primary_key=True)
-    id = models.BigAutoField()
-    email = models.CharField(max_length=64)
-
-    USERNAME_FIELD = "email"
+    uuid = models.UUIDField(unique=True, db_index=True)
+    email = models.CharField(max_length=64, unique=True)
 
 
 class SchoolStaff(models.Model):
