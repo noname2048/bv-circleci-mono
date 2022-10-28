@@ -1,15 +1,14 @@
-from enum import Enum
 from django.db import models
 
 
-class EntityType(Enum):
-    SCHOOL = "school"
-    GRADE = "grade"
-    CLASSROOM = "classroom"
-
 class FieldDefinition(models.Model):
     name = models.CharField(max_length=30)
-    entity_type = models.TextChoices(choices=EntityType.__)
+    entity_type = models.CharField(choices=EntityType.choices)
+
+    class EntityType(models.TextChoices):
+        SCHOOL = "school"
+        GRADE = "grade"
+        CLASSROOM = "classroom"
 
 
 class CustomField(models.Model):
