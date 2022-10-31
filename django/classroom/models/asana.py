@@ -19,11 +19,17 @@ class Task(models.Model):
     name = models.CharField(max_length=20)
 
 
-class WorkspaceCustomField(models.Model):
-    workspace = models.ForeignKey(Workspace)
-    field_type = models.CharField(max_length=20)
+class CustomTextFieldDefinition(models.Model):
+    field_name = models.CharField(max_length=20)
 
 
-class TaskCustomFieldChoice(models.Model):
+class TaskCustomTextFieldValue(models.Model):
     task = models.ForeignKey(Task)
-    custom_field = models.ForeignKey(WorkspaceCustomField)
+    text_field_definition = models.ForeignKey(CustomTextFieldDefinition)
+    field_value = models.CharField(max_length=20)
+
+
+class WorkspaceCustomTextFieldValue(models.Model):
+    workspace = models.ForeignKey(Workspace)
+    text_field_definition = models.ForeignKey(CustomTextFieldDefinition)
+    field_value = models.CharField(max_length=20)
